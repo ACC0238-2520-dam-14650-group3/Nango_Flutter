@@ -104,7 +104,7 @@ class AccountSupportView extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.secondaryText.withOpacity(0.3),
+            color: AppColors.secondaryText.withValues(alpha: 0.3),
             width: 1,
           ),
         ),

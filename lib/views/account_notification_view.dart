@@ -134,7 +134,7 @@ class _AccountNotificationViewState extends State<AccountNotificationView> {
                   Switch(
                     value: _notificationBadge,
                     onChanged: _saveNotificationBadge,
-                    activeColor: AppColors.secondary,
+                    activeThumbColor: AppColors.secondary,
                   ),
                 ],
               ),

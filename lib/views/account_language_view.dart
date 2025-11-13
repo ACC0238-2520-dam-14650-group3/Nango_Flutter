@@ -120,7 +120,7 @@ class _AccountLanguageViewState extends State<AccountLanguageView> {
           border: Border.all(
             color: isSelected
                 ? AppColors.secondaryText
-                : AppColors.secondaryText.withOpacity(0.3),
+                : AppColors.secondaryText.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
         ),

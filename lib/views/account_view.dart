@@ -328,7 +328,7 @@ class _AccountViewState extends State<AccountView> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.secondaryText.withOpacity(0.3),
+          color: AppColors.secondaryText.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
