@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
+import 'package:nango_flutter/views/history_1_passenger.dart';
 import 'package:nango_flutter/views/account_view.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -136,11 +138,19 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+        currentIndex: 0, //home
+        onTap: (i) {
+         if (i == 0) {
+           //home
+         } else if (i == 1){
+           //quotes
+         } else if (i == 2){
+           //history
+           Navigator.push(
+             context,
+             MaterialPageRoute(builder: (_) => const History1Passenger()),
+           );
+         }
         },
         backgroundColor: AppColors.backgroundLight,
         selectedItemColor: AppColors.secondary,
