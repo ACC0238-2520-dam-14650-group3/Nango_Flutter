@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
+import 'package:nango_flutter/views/account_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -42,7 +43,14 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.account_circle_outlined),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AccountView(),
+                            ),
+                          );
+                        },
                         color: AppColors.primaryText,
                       ),
                     ],
