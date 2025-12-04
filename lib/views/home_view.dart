@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
 import 'package:nango_flutter/views/history_1_passenger.dart';
 import 'package:nango_flutter/views/account_view.dart';
-
+import 'package:nango_flutter/views/notifications_nango.dart';
+import 'package:nango_flutter/views/quotes1_passenger.dart';
+import 'package:nango_flutter/views/chat_1_passenger.dart'; // Import the new chat view
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -40,7 +42,14 @@ class _HomeViewState extends State<HomeView> {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.notifications_outlined),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationsNangoView(),
+                            ),
+                          );
+                        },
                         color: AppColors.primaryText,
                       ),
                       IconButton(
@@ -127,7 +136,12 @@ class _HomeViewState extends State<HomeView> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      // Handle chat
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Chat1Passenger(),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -143,7 +157,10 @@ class _HomeViewState extends State<HomeView> {
          if (i == 0) {
            //home
          } else if (i == 1){
-           //quotes
+           Navigator.push(
+             context,
+             MaterialPageRoute(builder: (_) => const Quotes1Passenger()),
+           );
          } else if (i == 2){
            //history
            Navigator.push(

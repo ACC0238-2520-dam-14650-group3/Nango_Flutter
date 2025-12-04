@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
+import 'package:nango_flutter/services/trip_history_service.dart';
 import 'package:nango_flutter/views/home_view.dart';
-import 'package:nango_flutter/views/history_2_passenger.dart'; // TripCardData
+import 'package:nango_flutter/views/notifications_nango.dart';
 
 class Comments2PassengerView extends StatefulWidget {
   final TripCardData trip;
@@ -58,12 +59,20 @@ class _Comments2PassengerViewState extends State<Comments2PassengerView> {
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 12),
-            child: Icon(Icons.notifications_none, color: Colors.black87),
+            padding: const EdgeInsets.only(right: 12),
+            child: IconButton(
+              icon: const Icon(Icons.notifications_none, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const NotificationsNangoView()),
+                );
+              },
+            ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.account_circle_outlined, color: Colors.black87),
           ),
@@ -235,7 +244,7 @@ class _Comments2PassengerViewState extends State<Comments2PassengerView> {
                 color: AppColors.backgroundLight,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: const Color.fromRGBO(0, 0, 0, 0.06),
                     blurRadius: 4,
                     offset: const Offset(0, -2),
                   ),

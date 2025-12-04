@@ -142,7 +142,7 @@ class _History1PassengerState extends State<History1Passenger> {
                 ),
                 onPressed: () {
                   final f = HistoryFilters(month: _selMonth, expense: _selExpense, tripType: _selType);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => History2Passenger(filters: f)));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const History2Passenger()));
                 },
                 child: const Text('Generate'),
               ),

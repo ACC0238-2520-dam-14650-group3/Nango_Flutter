@@ -1,79 +1,19 @@
+
 import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
+import 'package:nango_flutter/services/trip_history_service.dart';
+import 'package:nango_flutter/views/comments2_passenger.dart';
+import 'home_view.dart';
 import 'package:nango_flutter/views/home_view.dart';
 import 'package:nango_flutter/views/reschedule_passenger.dart';
-import 'package:nango_flutter/views/comments2_passenger.dart';
-import 'history_1_passenger.dart';
-
-class TripCardData {
-  final String start, dest, driver, type;
-  final DateTime dateTime;
-  final int price;
-  TripCardData({
-    required this.start,
-    required this.dest,
-    required this.driver,
-    required this.dateTime,
-    required this.price,
-    required this.type,
-  });
-}
 
 class History2Passenger extends StatelessWidget {
-  final HistoryFilters filters;
-  const History2Passenger({super.key, required this.filters});
-
-  List<TripCardData> _all() => [
-    TripCardData(
-      start: 'Mercado Unicachi, Los Olivos',
-      dest: 'Universidad Nacional de Ingeniería (UNI), Rímac',
-      driver: 'Junior Castillo',
-      dateTime: DateTime(2025, 5, 24, 13, 30),
-      price: 6,
-      type: 'Student',
-    ),
-    TripCardData(
-      start: 'Mercado Unicachi, Los Olivos',
-      dest: 'Universidad Nacional de Ingeniería (UNI), Rímac',
-      driver: 'Luciana Contreras',
-      dateTime: DateTime(2025, 5, 24, 13, 30),
-      price: 18,
-      type: 'Family',
-    ),
-  ];
-
-  List<TripCardData> _apply(List<TripCardData> s) => s.where((t) {
-    final monthOk =
-        (filters.month == 'All') || (t.dateTime.month == _m(filters.month));
-    final expOk =
-        (filters.expense == 'All') || ('S/.${t.price}' == filters.expense);
-    final typeOk =
-        (filters.tripType == 'All') || (t.type == filters.tripType);
-    return monthOk && expOk && typeOk;
-  }).toList();
-
-  int _m(String name) {
-    const n = [
-      '',
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    return n.indexOf(name);
-  }
+  const History2Passenger({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final items = _apply(_all());
+    // Get trips from the service
+    final items = TripHistoryService().trips;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
@@ -105,7 +45,7 @@ class History2Passenger extends StatelessWidget {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => const HomeView()),
-                  (r) => false,
+              (r) => false,
             );
           }
         },
@@ -127,7 +67,8 @@ class History2Passenger extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.history_outlined),
             activeIcon: Icon(Icons.history),
-            label: 'history',)
+            label: 'history',
+          )
         ],
       ),
       body: ListView.separated(
@@ -160,11 +101,25 @@ class _TripCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Starting Point', style: TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.w800)),
-            Text(data.start, style: const TextStyle(color:  AppColors.primaryDark,),),
+            Text('Starting Point',
+                style: TextStyle(
+                    color: AppColors.primaryDark, fontWeight: FontWeight.w800)),
+            Text(
+              data.start,
+              style: const TextStyle(
+                color: AppColors.primaryDark,
+              ),
+            ),
             const SizedBox(height: 8),
-            Text('Destination', style: TextStyle(color:  AppColors.primaryDark, fontWeight: FontWeight.w800)),
-            Text(data.dest, style: const TextStyle(color:  AppColors.primaryDark,),),
+            Text('Destination',
+                style: TextStyle(
+                    color: AppColors.primaryDark, fontWeight: FontWeight.w800)),
+            Text(
+              data.dest,
+              style: const TextStyle(
+                color: AppColors.primaryDark,
+              ),
+            ),
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,8 +151,12 @@ class _TripCard extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.event_repeat_outlined,color:  AppColors.primaryDark),
-                      label: const Text('Reschedule', style: TextStyle(color:  AppColors.primaryDark, fontWeight: FontWeight.w800)),
+                      icon: const Icon(Icons.event_repeat_outlined,
+                          color: AppColors.primaryDark),
+                      label: const Text('Reschedule',
+                          style: TextStyle(
+                              color: AppColors.primaryDark,
+                              fontWeight: FontWeight.w800)),
                     ),
                     const SizedBox(width: 8),
                     TextButton.icon(
@@ -209,8 +168,12 @@ class _TripCard extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.mode_comment_outlined, color:  AppColors.primaryDark),
-                      label: const Text('Comment', style: TextStyle(color:  AppColors.primaryDark, fontWeight: FontWeight.w800)),
+                      icon: const Icon(Icons.mode_comment_outlined,
+                          color: AppColors.primaryDark),
+                      label: const Text('Comment',
+                          style: TextStyle(
+                              color: AppColors.primaryDark,
+                              fontWeight: FontWeight.w800)),
                     ),
                   ],
                 ),
@@ -238,10 +201,14 @@ class _TripCard extends StatelessWidget {
   }
 
   Widget _kv(String k, String v) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(k, style: TextStyle(color:  AppColors.primaryDark, fontWeight: FontWeight.w800)),
-      Text(v, style: const TextStyle(color:  AppColors.primaryDark, fontWeight: FontWeight.normal)),
-    ],
-  );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(k,
+              style: TextStyle(
+                  color: AppColors.primaryDark, fontWeight: FontWeight.w800)),
+          Text(v,
+              style: const TextStyle(
+                  color: AppColors.primaryDark, fontWeight: FontWeight.normal)),
+        ],
+      );
 }
