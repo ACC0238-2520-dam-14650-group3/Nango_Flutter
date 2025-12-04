@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nango_flutter/views/history_2_passenger.dart';
 import 'package:nango_flutter/views/home_view.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
+import 'package:nango_flutter/views/quotes1_passenger.dart';
+import 'package:nango_flutter/views/account_view.dart';
+import 'package:nango_flutter/views/notifications_nango.dart';
 
 
 class HistoryFilters {
@@ -61,9 +64,31 @@ class _History1PassengerState extends State<History1Passenger> {
         centerTitle: true,
         title: Text('History',style: TextStyle(fontWeight: FontWeight.w800)),
         iconTheme: const IconThemeData(color: Colors.black87),
-        actions: const [
-          Padding(padding: EdgeInsets.only(right: 12), child: Icon(Icons.notifications_none, color: Colors.black87)),
-          Padding(padding: EdgeInsets.only(right: 16), child: Icon(Icons.account_circle_outlined, color: Colors.black87)),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: IconButton(
+              icon: const Icon(Icons.notifications_none, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const NotificationsNangoView()),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle_outlined, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AccountView()),
+                );
+              },
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -73,7 +98,12 @@ class _History1PassengerState extends State<History1Passenger> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => const HomeView()),
-                  (r) => false,
+              (r) => false,
+            );
+          } else if (i == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Quotes1Passenger()),
             );
           }
         },
@@ -142,7 +172,7 @@ class _History1PassengerState extends State<History1Passenger> {
                 ),
                 onPressed: () {
                   final f = HistoryFilters(month: _selMonth, expense: _selExpense, tripType: _selType);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => History2Passenger(filters: f)));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const History2Passenger()));
                 },
                 child: const Text('Generate'),
               ),

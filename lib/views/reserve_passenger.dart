@@ -1,24 +1,19 @@
+
 import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
-import 'package:nango_flutter/views/home_view.dart';
+import 'package:nango_flutter/services/trip_history_service.dart';
 import 'package:nango_flutter/views/history_2_passenger.dart';
-import 'package:nango_flutter/views/quotes1_passenger.dart';
-import 'package:nango_flutter/views/history_1_passenger.dart';
-import 'package:nango_flutter/views/account_view.dart';
-import 'package:nango_flutter/views/notifications_nango.dart';
+import 'package:nango_flutter/views/home_view.dart';
 
-import '../services/trip_history_service.dart'; // para TripCardData
-
-class ReschedulePassengerView extends StatefulWidget {
+class ReservePassengerView extends StatefulWidget {
   final TripCardData trip;
-  const ReschedulePassengerView({super.key, required this.trip});
+  const ReservePassengerView({super.key, required this.trip});
 
   @override
-  State<ReschedulePassengerView> createState() =>
-      _ReschedulePassengerViewState();
+  State<ReservePassengerView> createState() => _ReservePassengerViewState();
 }
 
-class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
+class _ReservePassengerViewState extends State<ReservePassengerView> {
   String _payment = 'Yape';
 
   @override
@@ -32,41 +27,24 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
         backgroundColor: AppColors.backgroundLight,
         elevation: 0,
         centerTitle: true,
-        title:
-        const Text('Reschedule', style: TextStyle(fontWeight: FontWeight.w700)),
+        title: const Text('Reserve', style: TextStyle(fontWeight: FontWeight.w700)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: IconButton(
-              icon: const Icon(Icons.notifications_none, color: Colors.black87),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const NotificationsNangoView()),
-                );
-              },
-            ),
+            padding: EdgeInsets.only(right: 12),
+            child: Icon(Icons.notifications_none, color: Colors.black87),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: IconButton(
-              icon: const Icon(Icons.account_circle_outlined, color: Colors.black87),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AccountView()),
-                );
-              },
-            ),
+            padding: EdgeInsets.only(right: 16),
+            child: Icon(Icons.account_circle_outlined, color: Colors.black87),
           ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
+        currentIndex: 1, // Highlight 'quotes' tab
         onTap: (i) {
           if (i == 0) {
             Navigator.pushAndRemoveUntil(
@@ -74,15 +52,12 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
               MaterialPageRoute(builder: (_) => const HomeView()),
               (r) => false,
             );
-          } else if (i == 1) {
-            Navigator.pushReplacement(
+          }
+          if (i == 2) {
+             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (_) => const Quotes1Passenger()),
-            );
-          } else if (i == 2) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const History1Passenger()),
+              MaterialPageRoute(builder: (_) => const History2Passenger()),
+              (r) => false,
             );
           }
         },
@@ -104,14 +79,15 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history_outlined),
             activeIcon: Icon(Icons.history),
-            label: 'history',)
+            label: 'history',
+          )
         ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // mapa
+            // Map placeholder
             Container(
               height: 190,
               decoration: BoxDecoration(
@@ -227,11 +203,17 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
                           borderRadius: BorderRadius.circular(10)),
                     ),
                     onPressed: () {
-                      // confirmación >.<
+                      // 1. Add the trip to the history service
+                      TripHistoryService().addTrip(widget.trip);
+
+                      // 2. Show a confirmation message
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text('Schedule changed sucessfulyy')),
+                            content: Text('Trip reserved successfully!')),
                       );
+
+                      // 3. Pop the screen and return true to signal success
+                      Navigator.pop(context, true);
                     },
                     child: const Text('Request', style: TextStyle(
                       color: AppColors.backgroundDefault,
@@ -251,7 +233,7 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
     return ChoiceChip(
       label: Text(label),
       selected: selected,
-      selectedColor: AppColors.primary.withOpacity(0.15),
+      selectedColor: AppColors.primary.withAlpha(38),
       onSelected: (_) => setState(() => _payment = label),
       labelStyle: TextStyle(
         color: selected ? AppColors.primary : Colors.black87,
