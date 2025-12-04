@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nango_flutter/constants/app_colors.dart';
 import 'package:nango_flutter/views/home_view.dart';
 import 'package:nango_flutter/views/history_2_passenger.dart';
+import 'package:nango_flutter/views/quotes1_passenger.dart';
+import 'package:nango_flutter/views/history_1_passenger.dart';
+import 'package:nango_flutter/views/account_view.dart';
+import 'package:nango_flutter/views/notifications_nango.dart';
 
 import '../services/trip_history_service.dart'; // para TripCardData
 
@@ -34,14 +38,30 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 12),
-            child: Icon(Icons.notifications_none, color: Colors.black87),
+            padding: const EdgeInsets.only(right: 12),
+            child: IconButton(
+              icon: const Icon(Icons.notifications_none, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const NotificationsNangoView()),
+                );
+              },
+            ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.account_circle_outlined, color: Colors.black87),
+            padding: const EdgeInsets.only(right: 4),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle_outlined, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AccountView()),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -52,7 +72,17 @@ class _ReschedulePassengerViewState extends State<ReschedulePassengerView> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => const HomeView()),
-                  (r) => false,
+              (r) => false,
+            );
+          } else if (i == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Quotes1Passenger()),
+            );
+          } else if (i == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const History1Passenger()),
             );
           }
         },

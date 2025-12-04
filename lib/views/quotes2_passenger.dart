@@ -5,6 +5,9 @@ import 'package:nango_flutter/services/trip_history_service.dart';
 import 'package:nango_flutter/views/home_view.dart';
 import 'package:nango_flutter/views/quotes1_passenger.dart';
 import 'package:nango_flutter/views/reserve_passenger.dart';
+import 'package:nango_flutter/views/history_1_passenger.dart';
+import 'package:nango_flutter/views/account_view.dart';
+import 'package:nango_flutter/views/notifications_nango.dart';
 
 class QuoteCardData {
   final String start;
@@ -153,9 +156,31 @@ class _Quotes2PassengerState extends State<Quotes2Passenger> {
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: const [
-          Padding(padding: EdgeInsets.only(right: 12), child: Icon(Icons.notifications_none, color: Colors.black87)),
-          Padding(padding: EdgeInsets.only(right: 16), child: Icon(Icons.account_circle_outlined, color: Colors.black87)),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: IconButton(
+              icon: const Icon(Icons.notifications_none, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const NotificationsNangoView()),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle_outlined, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AccountView()),
+                );
+              },
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -166,6 +191,16 @@ class _Quotes2PassengerState extends State<Quotes2Passenger> {
               context,
               MaterialPageRoute(builder: (_) => const HomeView()),
               (r) => false,
+            );
+          } else if (i == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Quotes1Passenger()),
+            );
+          } else if (i == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const History1Passenger()),
             );
           }
         },

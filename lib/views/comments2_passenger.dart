@@ -3,6 +3,9 @@ import 'package:nango_flutter/constants/app_colors.dart';
 import 'package:nango_flutter/services/trip_history_service.dart';
 import 'package:nango_flutter/views/home_view.dart';
 import 'package:nango_flutter/views/notifications_nango.dart';
+import 'package:nango_flutter/views/quotes1_passenger.dart';
+import 'package:nango_flutter/views/history_1_passenger.dart';
+import 'package:nango_flutter/views/account_view.dart';
 
 class Comments2PassengerView extends StatefulWidget {
   final TripCardData trip;
@@ -72,9 +75,17 @@ class _Comments2PassengerViewState extends State<Comments2PassengerView> {
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.account_circle_outlined, color: Colors.black87),
+          Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle_outlined, color: Colors.black87),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AccountView()),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -88,7 +99,17 @@ class _Comments2PassengerViewState extends State<Comments2PassengerView> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => const HomeView()),
-                  (r) => false,
+              (r) => false,
+            );
+          } else if (i == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Quotes1Passenger()),
+            );
+          } else if (i == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const History1Passenger()),
             );
           }
         },
